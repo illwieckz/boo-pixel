@@ -16,24 +16,34 @@
 // ==/UserScript==
 
 console.log("boo89:load");
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function(event) {
 	console.log("boo89:run");
-	var split = /^(.*\/)(.*)$/.exec($('#yn-boo').attr('src'));
-	console.log("boo89:split");
-	if (split) {
+	var elemBoo = document.getElementById('yn-boo')
+	var currentBoo = elemBoo.getAttribute('src').split('/').pop();
+	console.log(currentBoo);
+	if (currentBoo) {
 		console.log("boo89:if-split");
-		if (split[2] === 'default.png') {
+		if (currentBoo === 'default.png') {
 			console.log("boo89:if-default");
-			$('#yn-boo')
-				.attr('src', GM_getResourceURL('boo89'));
+			console.log(GM_getResourceURL('boo89'));
+			elemBoo.setAttribute('src', GM_getResourceURL('boo89'));
 		}
-		else if (split[2] === 'sleep.png') {
+		else if (currentBoo === 'sleep.png') {
 			console.log("boo89:if-sleep");
-			$('#yn-boo')
-				.nextAll('.z0').attr('src', GM_getResourceURL('boo89-sleep-z0')).end()
-				.nextAll('.z1').attr('src', GM_getResourceURL('boo89-sleep-z1')).end()
-				.nextAll('.z2').attr('src', GM_getResourceURL('boo89-sleep-z2')).end()
-				.attr('src', GM_getResourceURL('boo89-sleep'));
+			changeNextSiblings(elemBoo, "z0");
+			changeNextSiblings(elemBoo, "z1");
+			changeNextSiblings(elemBoo, "z2");
+			elemBoo.setAttribute('src', GM_getResourceURL('boo89-sleep'));
+		}
+	}
+
+	function changeNextSiblings(elemBoo, zzz) {
+		var list = elemBoo.getElementsByClassName("." + zzz);
+		for (var i = 0; i < list.length; i++) {
+			var el = list[i];
+			while (el = el.nextSibling) {
+				el.setAttribute('src', GM_getResourceURL('boo89-sleep-' + zzz));
+			}
 		}
 	}
 });
