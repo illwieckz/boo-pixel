@@ -7,11 +7,11 @@
 // @version           1
 // @include           /^https?://www\.yaronet\.com/.*$/
 // @icon              boo89.png
-// @resource          boo89          boo89.png
-// @resource          boo89-sleep    boo89-sleep.png
-// @resource          boo89-sleep-z0 boo89-sleep-z0.png
-// @resource          boo89-sleep-z1 boo89-sleep-z1.png
-// @resource          boo89-sleep-z2 boo89-sleep-z2.png
+// @resource          boo89.png      boo89.png
+// @resource          sleep.png      boo89-sleep.png
+// @resource          sleep-z0.png   boo89-sleep-z0.png
+// @resource          sleep-z1.png   boo89-sleep-z1.png
+// @resource          sleep-z2.png   boo89-sleep-z2.png
 // @grant             GM_getResourceURL
 // ==/UserScript==
 
@@ -26,24 +26,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		if (currentBoo === 'default.png') {
 			console.log("boo89:if-default");
 			console.log(GM_getResourceURL('boo89'));
-			elemBoo.setAttribute('src', GM_getResourceURL('boo89'));
+			elemBoo.setAttribute('src', GM_getResourceURL('boo89.png'));
 		}
 		else if (currentBoo === 'sleep.png') {
 			console.log("boo89:if-sleep");
-			changeNextSiblings(elemBoo, "z0");
-			changeNextSiblings(elemBoo, "z1");
-			changeNextSiblings(elemBoo, "z2");
-			elemBoo.setAttribute('src', GM_getResourceURL('boo89-sleep'));
+//			changeNextSiblings("z0");
+//			changeNextSiblings("z1");
+//			changeNextSiblings("z2");
+			elemBoo.setAttribute('src', GM_getResourceURL('sleep.png'));
 		}
 	}
 
-	function changeNextSiblings(elemBoo, zzz) {
-		var list = elemBoo.getElementsByClassName("." + zzz);
-		for (var i = 0; i < list.length; i++) {
-			var el = list[i];
-			while (el = el.nextSibling) {
-				el.setAttribute('src', GM_getResourceURL('boo89-sleep-' + zzz));
-			}
-		}
-	}
+//	function changeNextSiblings(zzz) {
+//		console.log("plop-" + zzz);
+//		var list = document.getElementsByClassName(zzz);
+//		console.log(list);
+//		for (var i = 0; i < list.length; i++) {
+//			var el = list[i];
+//			while (el = el.nextSibling) {
+//				el.setAttribute('src', GM_getResourceURL('boo89-sleep-' + zzz));
+//			}
+//		}
+//	}
 });
