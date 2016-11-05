@@ -16,25 +16,21 @@
 // @grant             GM_getResourceURL
 // ==/UserScript==
 
+// The sleep-z#.png images are loaded by an already existing script (…/layout/html/page.js),
+// computing path from existing image path if it ends with “.png” so there is no need to care
+// about them. Also, since these images are loaded by a script at run-time, we can't substitute
+// them when DOMContentLoaded occurs (document-end). It's better to let the already running
+// script do it, feeding it with what it looks for. That's also why we named the resources with
+// file extension even if GreaseMonkey does not require it.
+
 var elemBoo = document.getElementById('yn-boo')
 var currentBoo = elemBoo.getAttribute('src').split('/').pop();
-console.log(currentBoo);
 if (currentBoo) {
 	if (currentBoo === 'default.png') {
 		console.log(GM_getResourceURL('boo89'));
 		elemBoo.setAttribute('src', GM_getResourceURL('boo89.png'));
 	}
 	else if (currentBoo === 'sleep.png') {
-		elemBoo.setAttribute('src', GM_getResourceURL('sleep.png'));
-		// The sleep-z#.png images are loaded by an already existing
-		// script (…/layout/html/page.js), computing path from existing
-		// image path if it ends with “.png” exists so there is no need
-		// to care about them.
-		// Also, since these images are loaded by a script at run-time,
-		// we can't substitute them when DOMContentLoaded occurs.
-		// It's better to let the already running script do it, feeding it
-		// with what it looks for.
-		// That's also why we named the resources with file extension even
-		// if GreaseMonkey does not require it.
+		elemBoo.setAttribute('src', GM_getResourceURL('boo89-sleep.png'));
 	}
 }
