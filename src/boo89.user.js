@@ -7,45 +7,34 @@
 // @version           1
 // @include           /^https?://www\.yaronet\.com/.*$/
 // @icon              boo89.png
-// @resource          boo89.png      boo89.png
-// @resource          sleep.png      boo89-sleep.png
-// @resource          sleep-z0.png   boo89-sleep-z0.png
-// @resource          sleep-z1.png   boo89-sleep-z1.png
-// @resource          sleep-z2.png   boo89-sleep-z2.png
+// @resource          boo89.png          boo89.png
+// @resource          boo89-sleep.png    boo89-sleep.png
+// @resource          boo89-sleep-z0.png boo89-sleep-z0.png
+// @resource          boo89-sleep-z1.png boo89-sleep-z1.png
+// @resource          boo89-sleep-z2.png boo89-sleep-z2.png
+// @run-at            document-end
 // @grant             GM_getResourceURL
 // ==/UserScript==
 
-console.log("boo89:load");
-document.addEventListener("DOMContentLoaded", function(event) {
-	console.log("boo89:run");
-	var elemBoo = document.getElementById('yn-boo')
-	var currentBoo = elemBoo.getAttribute('src').split('/').pop();
-	console.log(currentBoo);
-	if (currentBoo) {
-		console.log("boo89:if-split");
-		if (currentBoo === 'default.png') {
-			console.log("boo89:if-default");
-			console.log(GM_getResourceURL('boo89'));
-			elemBoo.setAttribute('src', GM_getResourceURL('boo89.png'));
-		}
-		else if (currentBoo === 'sleep.png') {
-			console.log("boo89:if-sleep");
-//			changeNextSiblings("z0");
-//			changeNextSiblings("z1");
-//			changeNextSiblings("z2");
-			elemBoo.setAttribute('src', GM_getResourceURL('sleep.png'));
-		}
+var elemBoo = document.getElementById('yn-boo')
+var currentBoo = elemBoo.getAttribute('src').split('/').pop();
+console.log(currentBoo);
+if (currentBoo) {
+	if (currentBoo === 'default.png') {
+		console.log(GM_getResourceURL('boo89'));
+		elemBoo.setAttribute('src', GM_getResourceURL('boo89.png'));
 	}
-
-//	function changeNextSiblings(zzz) {
-//		console.log("plop-" + zzz);
-//		var list = document.getElementsByClassName(zzz);
-//		console.log(list);
-//		for (var i = 0; i < list.length; i++) {
-//			var el = list[i];
-//			while (el = el.nextSibling) {
-//				el.setAttribute('src', GM_getResourceURL('boo89-sleep-' + zzz));
-//			}
-//		}
-//	}
-});
+	else if (currentBoo === 'sleep.png') {
+		elemBoo.setAttribute('src', GM_getResourceURL('sleep.png'));
+		// The sleep-z#.png images are loaded by an already existing
+		// script (…/layout/html/page.js), computing path from existing
+		// image path if it ends with “.png” exists so there is no need
+		// to care about them.
+		// Also, since these images are loaded by a script at run-time,
+		// we can't substitute them when DOMContentLoaded occurs.
+		// It's better to let the already running script do it, feeding it
+		// with what it looks for.
+		// That's also why we named the resources with file extension even
+		// if GreaseMonkey does not require it.
+	}
+}
