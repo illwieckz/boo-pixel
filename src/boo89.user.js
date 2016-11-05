@@ -12,7 +12,6 @@
 // @resource          boo89-sleep-z0.png boo89-sleep-z0.png
 // @resource          boo89-sleep-z1.png boo89-sleep-z1.png
 // @resource          boo89-sleep-z2.png boo89-sleep-z2.png
-// @run-at            document-end
 // @grant             GM_getResourceURL
 // ==/UserScript==
 
@@ -23,14 +22,16 @@
 // script do it, feeding it with what it looks for. That's also why we named the resources with
 // file extension even if GreaseMonkey does not require it.
 
-var elemBoo = document.getElementById('yn-boo')
-var currentBoo = elemBoo.getAttribute('src').split('/').pop();
-if (currentBoo) {
-	if (currentBoo === 'default.png') {
-		console.log(GM_getResourceURL('boo89'));
-		elemBoo.setAttribute('src', GM_getResourceURL('boo89.png'));
-	}
+document.addEventListener("DOMContentLoaded", function(event) {
+	var elemBoo = document.getElementById('yn-boo')
+	var currentBoo = elemBoo.getAttribute('src').split('/').pop();
+	if (currentBoo) {
+		if (currentBoo === 'default.png') {
+			console.log(GM_getResourceURL('boo89'));
+			elemBoo.setAttribute('src', GM_getResourceURL('boo89.png'));
+		}
 	else if (currentBoo === 'sleep.png') {
-		elemBoo.setAttribute('src', GM_getResourceURL('boo89-sleep.png'));
+			elemBoo.setAttribute('src', GM_getResourceURL('boo89-sleep.png'));
+		}
 	}
-}
+};
