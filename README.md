@@ -3,7 +3,7 @@ Boo89
 
 ![Boo89](src/boo89.png)
 
-This is a GreaseMonkey user script to display a pixelated _Boo_ with grey level (like on a [TI 89](https://en.wikipedia.org/wiki/TI-89_series) calculator) instead of the default one on [yAronet](http://www.yaronet.com).
+This is a GreaseMonkey user script to display a pixelated _Boo_ with grey levels (like on a [TI 89](https://en.wikipedia.org/wiki/TI-89_series) calculator) instead of the default one on [yAronet](http://www.yaronet.com).
 
 Installation
 ------------
